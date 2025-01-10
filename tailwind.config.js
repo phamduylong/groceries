@@ -15,7 +15,7 @@ export default {
   plugins: [
     skeleton({
       // NOTE: each theme included will increase the size of your CSS bundle
-      themes: [themes.nosh],
+      themes: [themes.nosh, themes.concord, themes.terminus, themes.fennec],
     }),
   ],
 }
