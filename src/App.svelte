@@ -1,15 +1,47 @@
 <script>
   import Trash from "lucide-svelte/icons/Trash";
+  import { Modal } from '@skeletonlabs/skeleton-svelte';
   /**
    * @type {{ item: string, quantity: number, price: number }[]}
   */
   let items = $state(localStorage.getItem("items") ? JSON.parse(localStorage.getItem("items")) : [
   ]);
 
+  let modalOpen = $state(false);
+
   $effect(() => {
     localStorage.setItem("items", JSON.stringify(items));
   });
+
+function modalClose(deleteItem) {
+  if (deleteItem) {
+    // Need to know which item triggered this modal
+  }
+  modalOpen = false;
+}
 </script>
+
+<Modal
+  bind:open={modalOpen}
+  triggerBase="btn preset-tonal"
+  contentBase="card bg-surface-100-900 p-4 space-y-4 shadow-xl max-w-screen-sm"
+  backdropClasses="backdrop-blur-sm"
+>
+  {#snippet content()}
+    <header class="flex justify-between">
+      <h2 class="h2">Delete Item</h2>
+    </header>
+    <article>
+      <p class="opacity-60">
+        Are you sure you want to delete this item? This action cannot be undone.
+      </p>
+    </article>
+    <footer class="flex justify-end gap-4">
+      <button type="button" class="btn preset-tonal" onclick={() => modalClose(false)}>Cancel</button>
+      <button type="button" class="btn preset-filled" onclick={() => modalClose(true)}>Confirm</button>
+    </footer>
+  {/snippet}
+</Modal>
 
 <main>
   <div class="container h-full mx-auto flex justify-center items-center p-10">
